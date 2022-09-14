@@ -1,0 +1,72 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+class char_insert
+{
+    private:
+        char *key,*ptr,*new_ptr;
+        int range,i,total,j,*index;
+
+    public:
+        void input();
+        void insert_element();
+};
+void char_insert::input()
+{
+    cout<<"Enter number of values to be stored in array: ";
+    cin>>range;
+
+    ptr = new char[range];
+
+    for(i=0;i<range;i++)
+    {
+        cout<<"Enter element "<<i+1<<": ";
+        cin>>ptr[i];
+    }
+}
+
+void char_insert::insert_element()
+{
+    cout<<"Enter total number of characters to be inserted: ";
+    cin>>total;
+
+    key = new char[total];
+    index = new int[total];
+
+    for(i=0;i<total;i++)
+    {
+        cout<<"Enter the character "<<i+1<<" to be insterted: ";
+        cin>>key[i];
+        cout<<"Enter the index of charater "<<i+1<<" where the value is to be stored: ";
+        cin>>index[i];
+        cout<<endl;
+    }
+
+    new_ptr = (char*) realloc(ptr,(range+total)*sizeof(char));
+
+    for(j=0;j<total;j++)
+    {
+        for(i=range+total;i>=index[j];i--)
+        {
+            new_ptr[i]=new_ptr[i-1];
+        }
+        new_ptr[index[j]]=key[j];
+    }
+
+    for(i=0;i<range+total;i++)
+    {
+    cout<<new_ptr[i]<<"\t";
+    }
+
+    free(new_ptr);
+    free(key);
+    free(index);
+}
+
+int main()
+{
+    char_insert obj;
+    obj.input();
+    obj.insert_element();
+    return(1);
+}
